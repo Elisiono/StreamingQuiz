@@ -1,0 +1,74 @@
+<div class="container mt-5" >
+  <div class="card">
+    <div class="d-flex justify-content-between p-3">
+      <div class="image">
+        <img src="../../assets/T.jpg" alt="logo" width="80">
+      </div>
+      <div class="quiz-header">
+        <h4 style="font-family: cursive;">Perfil Quiz</h4>
+        <span style="font-style: italic;">Welcome {{name}}</span>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!isQuizCompleted">
+      <div class="d-flex justify-content-around py-3">
+        <div class="score">
+          <h5>{{hboPoints}} HboPoints</h5>
+          <h5>{{netflixPoints}} NetflixPoints</h5>
+          <h5>{{amzPoints}} AmzPoints</h5>
+          <h5>{{disneyPoints}} DisneyPoints</h5>
+        </div>
+        <div class="question-remain">
+          <span style="font-style: italic;">Questão {{currentQuestion+1}} de {{questionList.length}}</span>
+        </div>
+        <div class="timer">
+          <h5>{{counter}} sec</h5>
+        </div>
+
+      </div>
+      <div class="progress mb-3">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [ngStyle]="{'width':progress +'%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      </div>
+      <div class="question">
+        <div class="card">
+          <h3>{{questionList[currentQuestion]?.questionText}}</h3>
+        </div>
+      </div>
+      <div class="options">
+        <ol *ngFor="let option of questionList[currentQuestion]?.options">
+          <li (click)="answer(currentQuestion+1, option)">
+            <div class="card" appChangeBg [isCorrect]="option.correct">
+              {{option.text}}
+            </div>
+          </li>
+        </ol>
+
+      </div>
+      <div class="d-flex justify-content-between">
+        <button class="btn" [disabled] = "currentQuestion === 0" (click)="previousQuestion()"><i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true"></i></button>
+        <button class="btn"(click)="resetQuiz()"><i class="fa text-primary fa-refresh fa-3x" aria-hidden="true"></i></button>
+        <button class="btn" [disabled] = "currentQuestion" (click)="nextQuestion()"><i class="fa text-primary fa-chevron-right fa-3x" aria-hidden="true"></i></button>
+      </div>
+
+
+    </ng-container>
+
+    <ng-container *ngIf="isQuizCompleted">
+      <div class="row d-flex justify-content-between">
+        <img class="img-fluid col-sm-12 mx-auto" style="width: 50%;" src="../../assets/testeLogo.jpg">
+        <div class="result text-center col-md-6 col-sm-12">
+          <h3>Congratulation!! <br>Voce terminou. <br>Veja o resultado:</h3>
+          <p>Total: {{questionList.length}} </p>
+          <!-- <p>Total de respostas certas: {{correctAnswer}} </p>
+          <p>Total de respostas erradas: {{incorrectAnswer}} </p> -->
+          <p>HBO: {{hboPoints}} </p>
+          <p>Netflix: {{netflixPoints}} </p>
+          <p>Amazon_Prime: {{amzPoints}} </p>
+          <p>Disney +: {{disneyPoints}}</p>
+          <p></p>
+        </div>>
+      </div>
+    </ng-container>
+
+  </div>
+</div>
